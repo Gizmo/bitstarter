@@ -21,7 +21,6 @@ References:
    - https://developer.mozilla.org/en-US/docs/JSON#JSON_in_Firefox_2
 */
 
-var sys = require('util');
 var fs = require('fs');
 var rest = require('restler');
 var program = require('commander');
@@ -92,11 +91,10 @@ var clone = function(fn) {
 if(require.main == module) {
     program
         .option('-c, --checks <check_file>', 'Path to checks.json', clone(assertFileExists), CHECKSFILE_DEFAULT)
-        .option('-f, --file <html_file>', 'Path to index.html', clone(assertFileExists), HTMLFILE_DEFAULT)
+        .option('-f, --file <html_file>', 'Path to index.html', clone(assertFileExists))
         .option('-u, --url <url_link>', 'URL to index.html')
         .parse(process.argv);
     if(program.url) {
-sys.puts(program.url);
         var checksURL = buildfn(program.checks);
         rest.get(program.url).on('complete', checksURL);
     } else if (program.file) {
